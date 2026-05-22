@@ -20,14 +20,12 @@
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
   html, body {
-    min-height: 100%;
+    height: 100%;
     font-family: 'Iowan Old Style', 'Palatino', 'Georgia', serif;
     background: var(--bg);
     color: var(--cream);
+    overflow: hidden;
     overscroll-behavior: none;
-  }
-  body {
-    overflow-x: hidden;
   }
 
   body {
@@ -49,42 +47,11 @@
   }
 
   .app {
-    min-height: 100dvh;
+    height: 100dvh;
     display: flex;
     flex-direction: column;
     position: relative;
     z-index: 2;
-  }
-
-  /* Tweede quiz eronder, iets kleiner */
-  .app--small {
-    min-height: auto;
-    border-top: 2px solid var(--line);
-    margin-top: 24px;
-  }
-  .app--small header {
-    padding-top: 18px;
-  }
-  .app--small .brand-name {
-    font-size: 15px;
-  }
-  .app--small main {
-    min-height: 60dvh;
-    padding: 14px 18px;
-  }
-  .app--small .card {
-    padding: 22px 20px;
-    min-height: 180px;
-  }
-  .app--small .question {
-    font-size: clamp(17px, 3.8vw, 22px);
-  }
-  .app--small .answer {
-    font-size: clamp(15px, 3.4vw, 19px);
-  }
-  .app--small .meta {
-    margin-bottom: 14px;
-    font-size: 9px;
   }
 
   /* ====== HEADER ====== */
@@ -280,11 +247,8 @@
   }
 
   /* ====== FILTERS PANEL ====== */
-  .app { /* needs position context for the absolute filter panel */
-    /* (already has position: relative above) */
-  }
   .filters {
-    position: absolute;
+    position: fixed;
     inset: 0;
     background: rgba(13,31,23,0.96);
     backdrop-filter: blur(8px);
@@ -364,104 +328,52 @@
 </head>
 <body>
 
-<div class="app" data-quiz="main">
+<div class="app">
   <header>
     <div class="brand">
       <div class="brand-name">Konvooi</div>
-      <div class="brand-sub">Trainer · algemeen</div>
+      <div class="brand-sub">Trainer · richting Noorwegen</div>
     </div>
     <div class="counter">
       <div>Gezien</div>
-      <div><strong data-role="cur">0</strong> / <span data-role="tot">0</span></div>
+      <div><strong id="cur">0</strong> / <span id="tot">0</span></div>
     </div>
   </header>
 
-  <main data-role="stage">
+  <main id="stage">
     <!-- Vraag/antwoord renders hier -->
   </main>
 
   <footer>
-    <button class="pill" data-role="filterBtn">Filters</button>
-    <button class="pill" data-role="shuffleBtn">Shuffle</button>
-    <button class="pill" data-role="prevBtn">← Vorige</button>
-    <button class="pill" data-role="resetBtn">Reset</button>
+    <button class="pill" id="filterBtn">Filters</button>
+    <button class="pill" id="shuffleBtn">Shuffle</button>
+    <button class="pill" id="prevBtn">← Vorige</button>
+    <button class="pill" id="resetBtn">Reset</button>
   </footer>
-
-  <!-- FILTERS PANEL (scoped per quiz) -->
-  <div class="filters" data-role="filtersPanel">
-    <div class="filters-header">
-      <div class="filters-title">Filters</div>
-      <button class="close-btn" data-role="closeFilters">×</button>
-    </div>
-
-    <div class="filter-section">
-      <h3>Categorieën</h3>
-      <div class="chip-group" data-role="categoryChips"></div>
-    </div>
-
-    <div class="filter-section">
-      <h3>Moeilijkheid</h3>
-      <div class="chip-group" data-role="difficultyChips">
-        <button class="pill active" data-diff="1">Niveau 1</button>
-        <button class="pill active" data-diff="2">Niveau 2</button>
-        <button class="pill active" data-diff="3">Niveau 3</button>
-      </div>
-    </div>
-
-    <button class="start-btn" data-role="applyFilters">Start oefening</button>
-  </div>
 </div>
 
-
-<!-- ============================================ -->
-<!-- TWEEDE QUIZ — VOLGENDE FINALE                -->
-<!-- ============================================ -->
-<div class="app app--small" data-quiz="finale">
-  <header>
-    <div class="brand">
-      <div class="brand-name">Volgende Finale</div>
-      <div class="brand-sub">Denemarken · grens Zweden</div>
-    </div>
-    <div class="counter">
-      <div>Gezien</div>
-      <div><strong data-role="cur">0</strong> / <span data-role="tot">0</span></div>
-    </div>
-  </header>
-
-  <main data-role="stage">
-    <!-- Vraag/antwoord renders hier -->
-  </main>
-
-  <footer>
-    <button class="pill" data-role="filterBtn">Filters</button>
-    <button class="pill" data-role="shuffleBtn">Shuffle</button>
-    <button class="pill" data-role="prevBtn">← Vorige</button>
-    <button class="pill" data-role="resetBtn">Reset</button>
-  </footer>
-
-  <!-- FILTERS PANEL (scoped per quiz) -->
-  <div class="filters" data-role="filtersPanel">
-    <div class="filters-header">
-      <div class="filters-title">Filters · Volgende Finale</div>
-      <button class="close-btn" data-role="closeFilters">×</button>
-    </div>
-
-    <div class="filter-section">
-      <h3>Categorieën</h3>
-      <div class="chip-group" data-role="categoryChips"></div>
-    </div>
-
-    <div class="filter-section">
-      <h3>Moeilijkheid</h3>
-      <div class="chip-group" data-role="difficultyChips">
-        <button class="pill active" data-diff="1">Niveau 1</button>
-        <button class="pill active" data-diff="2">Niveau 2</button>
-        <button class="pill active" data-diff="3">Niveau 3</button>
-      </div>
-    </div>
-
-    <button class="start-btn" data-role="applyFilters">Start oefening</button>
+<!-- FILTERS PANEL -->
+<div class="filters" id="filtersPanel">
+  <div class="filters-header">
+    <div class="filters-title">Filters</div>
+    <button class="close-btn" id="closeFilters">×</button>
   </div>
+
+  <div class="filter-section">
+    <h3>Categorieën</h3>
+    <div class="chip-group" id="categoryChips"></div>
+  </div>
+
+  <div class="filter-section">
+    <h3>Moeilijkheid</h3>
+    <div class="chip-group" id="difficultyChips">
+      <button class="pill active" data-diff="1">Niveau 1</button>
+      <button class="pill active" data-diff="2">Niveau 2</button>
+      <button class="pill active" data-diff="3">Niveau 3</button>
+    </div>
+  </div>
+
+  <button class="start-btn" id="applyFilters">Start oefening</button>
 </div>
 
 <script>
@@ -2208,226 +2120,19 @@ const VRAGEN = [
 ];
 
 // ============================================
-// DATA — Volgende Finale (Denemarken / grens Zweden)
+// STATE
 // ============================================
-const VRAGEN_FINALE = [
-  { id: 1, categorie: "denemarken", moeilijkheid: 1, vraag: "Welke schrijver van sprookjes als De Kleine Zeemeermin en Het Lelijke Eendje is de bekendste Deense literaire export?", antwoord: "Hans Christian Andersen" },
-  { id: 2, categorie: "denemarken", moeilijkheid: 1, vraag: "Welk Deens woord betekent zoiets als 'gezellige knusheid' en is wereldwijd een lifestyle-trend geworden?", antwoord: "Hygge" },
-  { id: 3, categorie: "denemarken", moeilijkheid: 1, vraag: "Welke prinses werd in 2024 koningin van Denemarken nadat Margrethe II abdiceerde, en is van origine Australisch?", antwoord: "Mary (Koningin Mary)" },
-  { id: 4, categorie: "denemarken", moeilijkheid: 2, vraag: "Welk standbeeld in de haven van Kopenhagen is gebaseerd op een Andersen-sprookje en wordt vaak 'kleiner dan verwacht' genoemd?", antwoord: "De Kleine Zeemeermin" },
-  { id: 5, categorie: "denemarken", moeilijkheid: 2, vraag: "Hoe noemt het bekende pretpark in het centrum van Kopenhagen, dat ouder is dan Disneyland en Walt Disney inspireerde?", antwoord: "Tivoli" },
-  { id: 6, categorie: "denemarken", moeilijkheid: 1, vraag: "Wat is de hoofdstad van Denemarken?", antwoord: "Kopenhagen" },
-  { id: 7, categorie: "denemarken", moeilijkheid: 2, vraag: "Hoe noemt de munteenheid van Denemarken — want Denemarken gebruikt geen euro?", antwoord: "Deense kroon (Krone)" },
-  { id: 8, categorie: "denemarken", moeilijkheid: 2, vraag: "Welke Deense filosoof wordt beschouwd als de vader van het existentialisme?", antwoord: "Søren Kierkegaard" },
-  { id: 9, categorie: "denemarken", moeilijkheid: 3, vraag: "Welke Deense astronoom bouwde op het eiland Hven een observatorium en verloor zijn neus in een duel?", antwoord: "Tycho Brahe" },
-  { id: 10, categorie: "denemarken", moeilijkheid: 3, vraag: "Welke Deense natuurkundige, vader van het atoommodel, kreeg in 1922 de Nobelprijs?", antwoord: "Niels Bohr" },
-  { id: 11, categorie: "denemarken", moeilijkheid: 2, vraag: "Welke kleur en welk symbool staan op de Deense vlag — die zou de oudste nog gebruikte vlag ter wereld zijn?", antwoord: "Wit kruis op rode achtergrond (Dannebrog)" },
-  { id: 12, categorie: "denemarken", moeilijkheid: 3, vraag: "Hoe noemt de Deense vlag in het Deens?", antwoord: "Dannebrog" },
-  { id: 13, categorie: "denemarken", moeilijkheid: 1, vraag: "Het Shakespeare-stuk Hamlet speelt zich af in welk Deens kasteel?", antwoord: "Kasteel Kronborg (in Helsingør / Elsinore)" },
-  { id: 14, categorie: "denemarken", moeilijkheid: 2, vraag: "In welke Deense stad — bekend om het kasteel uit Hamlet — komen toeristen kijken naar de overzet naar Zweden?", antwoord: "Helsingør" },
-  { id: 15, categorie: "denemarken", moeilijkheid: 2, vraag: "Welke Scandinavische zeerovers koloniseerden vanuit Denemarken delen van Engeland en Frankrijk?", antwoord: "De Vikingen" },
-  { id: 16, categorie: "denemarken", moeilijkheid: 3, vraag: "Welke Deense koning, bekend van een tand en een hedendaags techlogo, verenigde Denemarken en Noorwegen in de 10e eeuw?", antwoord: "Harald Blauwtand (Harald Blåtand)" },
-  { id: 17, categorie: "denemarken", moeilijkheid: 3, vraag: "Waar komt de naam 'Bluetooth' eigenlijk vandaan?", antwoord: "Van koning Harald Blauwtand (Blåtand)" },
-  { id: 18, categorie: "denemarken", moeilijkheid: 2, vraag: "Welk eiland is met Kopenhagen verbonden en vormt het Deense vasteland richting Zweden?", antwoord: "Seeland (Sjælland)" },
-  { id: 19, categorie: "denemarken", moeilijkheid: 2, vraag: "Welk schiereiland vormt het grootste deel van Denemarken en grenst aan Duitsland?", antwoord: "Jutland (Jylland)" },
-  { id: 20, categorie: "denemarken", moeilijkheid: 3, vraag: "Welke Deense Nobelprijswinnaar literatuur schreef de roman 'Out of Africa'?", antwoord: "Karen Blixen" },
-  { id: 21, categorie: "denemarken", moeilijkheid: 3, vraag: "Welk autonoom gebied — het grootste eiland ter wereld — valt nog steeds onder het Koninkrijk Denemarken?", antwoord: "Groenland" },
-  { id: 22, categorie: "denemarken", moeilijkheid: 3, vraag: "Welke eilandengroep tussen Schotland en IJsland behoort ook tot het Koninkrijk Denemarken?", antwoord: "De Faeröer" },
-  { id: 23, categorie: "denemarken", moeilijkheid: 2, vraag: "Welke Deense regisseur, bekend van Dancer in the Dark en Melancholia, werd ooit van Cannes verbannen?", antwoord: "Lars von Trier" },
-  { id: 24, categorie: "denemarken", moeilijkheid: 3, vraag: "Welke Deense filmstroming uit 1995 verbood o.a. kunstlicht en niet-diëgetische muziek?", antwoord: "Dogma 95" },
-  { id: 25, categorie: "denemarken", moeilijkheid: 2, vraag: "Welke Deense politieserie met Sofie Gråbøl in de hoofdrol werd internationaal een hit (vooral door haar trui)?", antwoord: "The Killing (Forbrydelsen)" },
-  { id: 26, categorie: "denemarken", moeilijkheid: 3, vraag: "Welke Deense politieke serie ging over een vrouwelijke premier en heette in het Deens 'Borgen'?", antwoord: "Borgen" },
-  { id: 27, categorie: "denemarken", moeilijkheid: 2, vraag: "Welke Deense film won in 2021 de Oscar voor beste niet-Engelstalige film, met Mads Mikkelsen die volwassenen aan de drank zet?", antwoord: "Druk (Another Round)" },
-  { id: 28, categorie: "denemarken", moeilijkheid: 1, vraag: "Welke Deense acteur speelde Hannibal in de gelijknamige serie en de schurk Le Chiffre in Casino Royale?", antwoord: "Mads Mikkelsen" },
-  { id: 29, categorie: "denemarken", moeilijkheid: 2, vraag: "Wie is sinds 2019 premier van Denemarken (en is dat in 2026 nog steeds)?", antwoord: "Mette Frederiksen" },
-  { id: 30, categorie: "denemarken", moeilijkheid: 3, vraag: "Tot welke partij behoort de Deense premier Mette Frederiksen?", antwoord: "Socialdemokratiet (Sociaaldemocraten)" },
+let state = {
+  filteredVragen: [],
+  history: [],          // stack van bekeken vraag-indices (in filteredVragen)
+  historyPos: -1,       // huidige positie in history
+  seenIds: new Set(),   // ids die deze ronde al getoond zijn (voor random-zonder-herhaling)
+  showAnswer: false,
+  selectedCategories: new Set(),
+  selectedDifficulties: new Set([1, 2, 3]),
+};
 
-  { id: 31, categorie: "denemarken", moeilijkheid: 1, vraag: "Welk bier-merk uit Kopenhagen heeft de slogan 'Probably the best beer in the world'?", antwoord: "Carlsberg" },
-  { id: 32, categorie: "denemarken", moeilijkheid: 2, vraag: "Hoe noemt het typisch Deens belegd boterhammetje, vaak met haring of paling op donker roggebrood?", antwoord: "Smørrebrød" },
-  { id: 33, categorie: "denemarken", moeilijkheid: 2, vraag: "Welk Deens donker roggebrood, vol zaden, is de basis van smørrebrød?", antwoord: "Rugbrød" },
-  { id: 34, categorie: "denemarken", moeilijkheid: 2, vraag: "Welk gebakje — vaak gevuld met spijs of vanille-crème — kennen wij als 'Deens' maar heet in Denemarken zelf 'weens brood' (wienerbrød)?", antwoord: "Deens gebak (Danish pastry)" },
-  { id: 35, categorie: "denemarken", moeilijkheid: 3, vraag: "Welk Deens bier, naast Carlsberg, is bekend met een groene fles en de letter T?", antwoord: "Tuborg" },
-  { id: 36, categorie: "denemarken", moeilijkheid: 2, vraag: "Hoe noemt de sterke kruidenjenever die typisch in Scandinavië bij smørrebrød gedronken wordt?", antwoord: "Akvavit (Snaps)" },
-  { id: 37, categorie: "denemarken", moeilijkheid: 1, vraag: "Welk Deens restaurant in Kopenhagen — van chef René Redzepi — werd meerdere keren tot beste ter wereld verkozen?", antwoord: "Noma" },
-  { id: 38, categorie: "denemarken", moeilijkheid: 3, vraag: "Welke chef stond aan de basis van de New Nordic Cuisine-beweging?", antwoord: "René Redzepi" },
-  { id: 39, categorie: "denemarken", moeilijkheid: 2, vraag: "Hoe noemt de gehaktbal in de Deense keuken — vaak van varkensvlees en geserveerd met aardappelen?", antwoord: "Frikadeller" },
-  { id: 40, categorie: "denemarken", moeilijkheid: 3, vraag: "Welk Deens kerstgerecht — varkensgebraad met krokant zwoerd — is een feesttraditie?", antwoord: "Flæskesteg" },
-  { id: 41, categorie: "denemarken", moeilijkheid: 3, vraag: "Welke koekjes in een blauwe blikken doos, vaak op de feestdagen, zijn een wereldwijd Deens exportproduct?", antwoord: "Deense boterkoekjes (Danish butter cookies)" },
-  { id: 42, categorie: "denemarken", moeilijkheid: 2, vraag: "Welke vissoort wordt typisch gerookt of gemarineerd op smørrebrød gelegd en is een Scandinavische klassieker?", antwoord: "Haring" },
-  { id: 43, categorie: "denemarken", moeilijkheid: 2, vraag: "Hoe noemt de Deense versie van de hotdog, vaak met geroosterde uitjes en remoulade?", antwoord: "Pølse (Pølsevogn = hotdogkraam)" },
-  { id: 44, categorie: "denemarken", moeilijkheid: 3, vraag: "Welk vlees zit traditioneel in een 'rød pølse' — het felrode worstje uit de Deense straatkraam?", antwoord: "Varkensvlees" },
-  { id: 45, categorie: "denemarken", moeilijkheid: 3, vraag: "Welk Deens dessert bestaat uit warme rode bessen-vla met room — letterlijk 'rode grutten'?", antwoord: "Rødgrød med fløde" },
-  { id: 46, categorie: "denemarken", moeilijkheid: 2, vraag: "Welke kaas, scherp en stinkend, draagt de naam van een Deens type blauwschimmel?", antwoord: "Danablu (Deense blauwschimmelkaas)" },
-  { id: 47, categorie: "denemarken", moeilijkheid: 2, vraag: "Welk gerold gebakje met kaneel en witte glazuur wordt in Denemarken 'kanelsnegl' (kaneelslak) genoemd?", antwoord: "Kaneelbroodje / kanelsnegl" },
-  { id: 48, categorie: "denemarken", moeilijkheid: 3, vraag: "Welk Deens kerstbier verschijnt elk jaar op een vaste 'J-dag' (eerste vrijdag van november)?", antwoord: "Julebryg (Tuborg Julebryg)" },
-  { id: 49, categorie: "denemarken", moeilijkheid: 3, vraag: "Wat is 'glögg' — het warme drankje dat in heel Scandinavië rond Kerst gedronken wordt?", antwoord: "Warme kruidenwijn (glühwein-equivalent)" },
-  { id: 50, categorie: "denemarken", moeilijkheid: 2, vraag: "Welke Deense Michelin-stad — naast Kopenhagen — is bekend om zijn culinaire scene?", antwoord: "Aarhus" },
-
-  { id: 51, categorie: "denemarken", moeilijkheid: 1, vraag: "Wat is, na Kopenhagen, de tweede grootste stad van Denemarken, op het schiereiland Jutland?", antwoord: "Aarhus" },
-  { id: 52, categorie: "denemarken", moeilijkheid: 3, vraag: "Welke noordelijke Deense stad aan de Limfjord staat bekend om zijn akvavit?", antwoord: "Aalborg" },
-  { id: 53, categorie: "denemarken", moeilijkheid: 2, vraag: "Hoe heet de kleurrijke kade van Kopenhagen waar Andersen zelf woonde — Instagram-favoriet met geverfde gevels?", antwoord: "Nyhavn" },
-  { id: 54, categorie: "denemarken", moeilijkheid: 3, vraag: "Welke autonome vrijstaat in Kopenhagen, met eigen regels, werd in 1971 uitgeroepen door hippies?", antwoord: "Christiania" },
-  { id: 55, categorie: "denemarken", moeilijkheid: 2, vraag: "Hoe noemt het paleis van de Deense koninklijke familie in het centrum van Kopenhagen?", antwoord: "Amalienborg" },
-  { id: 56, categorie: "denemarken", moeilijkheid: 3, vraag: "Welk Deens kasteel buiten Kopenhagen, met park en gracht, staat in Hillerød en huisvest het nationaal historisch museum?", antwoord: "Frederiksborg" },
-  { id: 57, categorie: "denemarken", moeilijkheid: 3, vraag: "Op welk Deens eiland staat het renaissance-kasteel Egeskov, dat als een van de mooiste van Europa geldt?", antwoord: "Funen (Fyn)" },
-  { id: 58, categorie: "denemarken", moeilijkheid: 3, vraag: "Hoe heet de lange autovrije winkelstraat in het centrum van Kopenhagen?", antwoord: "Strøget" },
-  { id: 59, categorie: "denemarken", moeilijkheid: 3, vraag: "Welk Deens eiland in de Oostzee — dichter bij Zweden en Polen dan bij Denemarken zelf — is bekend om zijn ronde kerken?", antwoord: "Bornholm" },
-  { id: 60, categorie: "denemarken", moeilijkheid: 2, vraag: "Welk modern kunstmuseum in Aarhus staat bekend om zijn regenboogkoepel op het dak?", antwoord: "ARoS" },
-  { id: 61, categorie: "denemarken", moeilijkheid: 2, vraag: "Welke Deense architect ontwierp het Sydney Opera House?", antwoord: "Jørn Utzon" },
-  { id: 62, categorie: "denemarken", moeilijkheid: 3, vraag: "Welke Deense designer is bekend van de Ant Chair en de Egg Chair?", antwoord: "Arne Jacobsen" },
-  { id: 63, categorie: "denemarken", moeilijkheid: 3, vraag: "Welk Kopenhaags hotel — ontworpen door Arne Jacobsen — was lang het hoogste gebouw van de stad?", antwoord: "Radisson Collection Royal Hotel (SAS Royal Hotel)" },
-  { id: 64, categorie: "denemarken", moeilijkheid: 3, vraag: "Welk Deens farmaceutisch bedrijf — bekend van insuline en de afslankspuit Ozempic — werd in 2023 een van de meest waardevolle bedrijven van Europa?", antwoord: "Novo Nordisk" },
-  { id: 65, categorie: "denemarken", moeilijkheid: 1, vraag: "Welk Deens geneesmiddel tegen diabetes wordt ook ingezet als afslankmiddel?", antwoord: "Ozempic (semaglutide)" },
-  { id: 66, categorie: "denemarken", moeilijkheid: 3, vraag: "Welke Deense rederij — een van de grootste containerrederijen ter wereld — werd opgericht door Arnold Peter Møller?", antwoord: "Maersk" },
-  { id: 67, categorie: "denemarken", moeilijkheid: 3, vraag: "Welke Deense band uit Aalborg scoorde in 1997 een wereldhit met 'Barbie Girl'?", antwoord: "Aqua" },
-  { id: 68, categorie: "denemarken", moeilijkheid: 3, vraag: "Welke Deense zangeres met één letter als artiestennaam zong met Major Lazer 'Lean On'?", antwoord: "MØ" },
-  { id: 69, categorie: "denemarken", moeilijkheid: 3, vraag: "Welke Deense zangeres won in 2013 het Eurovisiesongfestival met 'Only Teardrops'?", antwoord: "Emmelie de Forest" },
-  { id: 70, categorie: "denemarken", moeilijkheid: 3, vraag: "Hoe heet de zeestraat tussen Denemarken en Noorwegen, ten noorden van Jutland?", antwoord: "Het Skagerrak" },
-
-  { id: 71, categorie: "denemarken", moeilijkheid: 1, vraag: "Welke Deense voetballer kreeg een hartstilstand op het EK 2021 tegen Finland en speelde nadien nog voor Manchester United?", antwoord: "Christian Eriksen" },
-  { id: 72, categorie: "denemarken", moeilijkheid: 2, vraag: "Welke Deense doelman, lang #1 bij Leicester City, werd FIFA-keeper van het jaar 2018?", antwoord: "Kasper Schmeichel" },
-  { id: 73, categorie: "denemarken", moeilijkheid: 2, vraag: "Wie is de vader van Kasper Schmeichel — zelf legendarische keeper, ooit bij Manchester United?", antwoord: "Peter Schmeichel" },
-  { id: 74, categorie: "denemarken", moeilijkheid: 3, vraag: "Welk Deens elftal won verrassend het EK 1992 — terwijl ze pas op het laatste moment uitgenodigd waren?", antwoord: "Het Deense voetbalelftal (van 1992)" },
-  { id: 75, categorie: "denemarken", moeilijkheid: 3, vraag: "Welke Deense badmintonner werd meermaals wereldkampioen?", antwoord: "Viktor Axelsen" },
-  { id: 76, categorie: "denemarken", moeilijkheid: 3, vraag: "Welke Deense handballer was wereldwijd een van de besten en hielp Denemarken aan olympisch goud in 2016?", antwoord: "Mikkel Hansen" },
-  { id: 77, categorie: "denemarken", moeilijkheid: 3, vraag: "Welke Deense wielrenner, ploeggenoot van Wout van Aert bij Visma, won de Tour de France in 2022 en 2023?", antwoord: "Jonas Vingegaard" },
-  { id: 78, categorie: "denemarken", moeilijkheid: 2, vraag: "In welk land ging de Tour de France in 2022 van start — een speciale eer voor het wielerland?", antwoord: "Denemarken (Kopenhagen)" },
-  { id: 79, categorie: "denemarken", moeilijkheid: 3, vraag: "Welke speler scoorde voor Denemarken het beslissende doelpunt in de EK-finale van 1992 tegen Duitsland?", antwoord: "Kim Vilfort" },
-  { id: 80, categorie: "denemarken", moeilijkheid: 3, vraag: "Welke Deense aanvaller speelde voor Arsenal en Juventus en heette 'Lord' Bendtner?", antwoord: "Nicklas Bendtner" },
-  { id: 81, categorie: "denemarken", moeilijkheid: 3, vraag: "Welke Deense aanvaller, oud-Feyenoorder en Milan-speler, werd topscorer aller tijden van het Deens elftal?", antwoord: "Jon Dahl Tomasson" },
-  { id: 82, categorie: "denemarken", moeilijkheid: 3, vraag: "Welke Deense golfer was Europees Ryder Cup-kapitein en is de bekendste Deense golfer ooit?", antwoord: "Thomas Bjørn" },
-  { id: 83, categorie: "denemarken", moeilijkheid: 3, vraag: "Welke Deense zwemster won goud op de 50 m vrije slag op de Olympische Spelen in Rio 2016?", antwoord: "Pernille Blume" },
-  { id: 84, categorie: "denemarken", moeilijkheid: 3, vraag: "Welke Deense voetbalclub uit Kopenhagen speelt zijn thuismatches in Parken Stadion?", antwoord: "FC København (FC Kopenhagen)" },
-  { id: 85, categorie: "denemarken", moeilijkheid: 3, vraag: "Welk Deens stadion — gedeeld door FC Kopenhagen en het nationale elftal — heet simpelweg 'het park'?", antwoord: "Parken" },
-
-  { id: 86, categorie: "denemarken", moeilijkheid: 2, vraag: "Welk Deens speelgoedmerk, opgericht in 1932, is wereldwijd de grootste speelgoedfabrikant?", antwoord: "LEGO" },
-  { id: 87, categorie: "denemarken", moeilijkheid: 1, vraag: "In welke Deense stad ontstond Lego, waar nu ook het hoofdkwartier en Legoland staan?", antwoord: "Billund" },
-  { id: 88, categorie: "denemarken", moeilijkheid: 2, vraag: "Welke Deense timmerman bedacht Lego in 1932 — begonnen met houten speelgoed?", antwoord: "Ole Kirk Christiansen" },
-  { id: 89, categorie: "denemarken", moeilijkheid: 3, vraag: "Hoeveel noppen zitten er op een klassiek 2x4 Lego-blokje?", antwoord: "Acht" },
-  { id: 90, categorie: "denemarken", moeilijkheid: 3, vraag: "Welke Deense brouwer doneerde zijn aandelen aan de wetenschap en richtte daarmee de Carlsberg Foundation op?", antwoord: "J.C. Jacobsen" },
-  { id: 91, categorie: "denemarken", moeilijkheid: 3, vraag: "Welk Deens hi-fi merk — bekend om minimalistisch design en hoge prijzen — werd opgericht in 1925?", antwoord: "Bang & Olufsen" },
-  { id: 92, categorie: "denemarken", moeilijkheid: 3, vraag: "Welke Deense fietsfabrikant — opvallend met bakfietsen in Amsterdam en Brussel — komt uit de gelijknamige vrijstaat?", antwoord: "Christiania Bikes" },
-  { id: 93, categorie: "denemarken", moeilijkheid: 3, vraag: "Welke Deense schrijver schreef de roman 'Smilla's gevoel voor sneeuw'?", antwoord: "Peter Høeg" },
-  { id: 94, categorie: "denemarken", moeilijkheid: 3, vraag: "Welke Deense ridderorde, gesticht door koning Christiaan V, is een van de oudste in Europa en draagt een dierennaam?", antwoord: "De Orde van de Olifant (Elefantordenen)" },
-  { id: 95, categorie: "denemarken", moeilijkheid: 3, vraag: "Hoe heet de zeestraat tussen Jutland en Zweden — onder de Sont door?", antwoord: "Het Kattegat" },
-  { id: 96, categorie: "denemarken", moeilijkheid: 3, vraag: "Welke Deense uitvinder bedacht — samen met Edwin Rice — in 1915 de moderne luidspreker?", antwoord: "Peter L. Jensen" },
-  { id: 97, categorie: "denemarken", moeilijkheid: 3, vraag: "Welk Deens speelgoedmerk maakt grotere blokken voor peuters, opvallend dubbel zo groot als gewone Lego?", antwoord: "Duplo (van LEGO)" },
-  { id: 98, categorie: "denemarken", moeilijkheid: 3, vraag: "Welk Deens kindermerk, gekoppeld aan Lego, brengt films en games uit gebaseerd op de iconische blokken?", antwoord: "LEGO (LEGO Movie / LEGO Games)" },
-  { id: 99, categorie: "denemarken", moeilijkheid: 3, vraag: "Welke Deense entrepreneur richtte in 2003 het bedrijf Skype mee op (samen met Estniërs Tallinn en Heinla)?", antwoord: "Janus Friis" },
-  { id: 100, categorie: "denemarken", moeilijkheid: 3, vraag: "In welke Deense stad — geboorteplaats van Hans Christian Andersen — staat een groot Andersen-museum?", antwoord: "Odense" },
-
-  // ===== ZWEDEN =====
-  { id: 101, categorie: "zweden", moeilijkheid: 1, vraag: "Welke Zweedse popgroep won in 1974 het Eurovisiesongfestival met 'Waterloo'?", antwoord: "ABBA" },
-  { id: 102, categorie: "zweden", moeilijkheid: 2, vraag: "In welke Zweedse stad staat het ABBA-museum?", antwoord: "Stockholm" },
-  { id: 103, categorie: "zweden", moeilijkheid: 1, vraag: "Wat is de hoofdstad van Zweden?", antwoord: "Stockholm" },
-  { id: 104, categorie: "zweden", moeilijkheid: 1, vraag: "Welke Zweedse meubelketen verkoopt platte dozen en gehaktballen?", antwoord: "IKEA" },
-  { id: 105, categorie: "zweden", moeilijkheid: 2, vraag: "Wie was de oprichter van IKEA — initialen IK in de bedrijfsnaam?", antwoord: "Ingvar Kamprad" },
-  { id: 106, categorie: "zweden", moeilijkheid: 3, vraag: "Waar staan de twee laatste letters van IKEA (de E en de A) voor?", antwoord: "Elmtaryd (boerderij) en Agunnaryd (dorp)" },
-  { id: 107, categorie: "zweden", moeilijkheid: 1, vraag: "Welke Zweedse voetballer, bekend om zijn ego en taekwondo-trap-goals, speelde bij Ajax, Barcelona, AC Milan en PSG?", antwoord: "Zlatan Ibrahimović" },
-  { id: 108, categorie: "zweden", moeilijkheid: 1, vraag: "Welke muziek-streamingdienst werd opgericht in Stockholm en heeft een groen logo?", antwoord: "Spotify" },
-  { id: 109, categorie: "zweden", moeilijkheid: 2, vraag: "Wie was de Zweedse uitvinder die dynamiet ontwikkelde en zijn vermogen naliet aan een prijs?", antwoord: "Alfred Nobel" },
-  { id: 110, categorie: "zweden", moeilijkheid: 3, vraag: "In welk Scandinavisch land wordt de Nobelprijs voor de Vrede uitgereikt — als enige niet in Zweden?", antwoord: "Noorwegen" },
-  { id: 111, categorie: "zweden", moeilijkheid: 1, vraag: "Welke Zweedse kinderboekenschrijver schiep Pippi Langkous?", antwoord: "Astrid Lindgren" },
-  { id: 112, categorie: "zweden", moeilijkheid: 2, vraag: "Welk dorp uit een ander Astrid Lindgren-boek wordt in het Nederlands 'Bolderburen' genoemd?", antwoord: "Bolderburen (Bullerbyn)" },
-  { id: 113, categorie: "zweden", moeilijkheid: 2, vraag: "Welke Zweedse regisseur — somber, zwart-wit, existentieel — is bekend van 'Het zevende zegel'?", antwoord: "Ingmar Bergman" },
-  { id: 114, categorie: "zweden", moeilijkheid: 3, vraag: "Welke Zweedse acteur, vaak bij Bergman, speelde de ridder in 'Het zevende zegel' en de Exorcist-priester?", antwoord: "Max von Sydow" },
-  { id: 115, categorie: "zweden", moeilijkheid: 3, vraag: "Welke Zweedse acteur uit Nymphomaniac is de vader van een acteursdynastie (Bill, Alexander, Gustaf)?", antwoord: "Stellan Skarsgård" },
-  { id: 116, categorie: "zweden", moeilijkheid: 1, vraag: "Welke Zweedse actrice — die de zin 'I want to be alone' onsterfelijk maakte — werd de stille filmgodin van Hollywood?", antwoord: "Greta Garbo" },
-  { id: 117, categorie: "zweden", moeilijkheid: 3, vraag: "Welke Zweedse actrice speelde Ilsa in Casablanca en won drie Oscars?", antwoord: "Ingrid Bergman" },
-  { id: 118, categorie: "zweden", moeilijkheid: 2, vraag: "Welke Zweedse schrijver schiep de Millennium-trilogie met Lisbeth Salander ('Het meisje met de draak-tatoeage')?", antwoord: "Stieg Larsson" },
-  { id: 119, categorie: "zweden", moeilijkheid: 3, vraag: "Welke Zweedse misdaadschrijver schiep inspecteur Wallander, gevestigd in het stadje Ystad?", antwoord: "Henning Mankell" },
-  { id: 120, categorie: "zweden", moeilijkheid: 2, vraag: "Welk Zweeds automerk, bekend om veiligheid, is tegenwoordig in handen van het Chinese Geely?", antwoord: "Volvo" },
-  { id: 121, categorie: "zweden", moeilijkheid: 3, vraag: "Welke Zweedse autobouwer — bekend van turbo's en de 900-reeks — ging in 2011 failliet?", antwoord: "Saab" },
-  { id: 122, categorie: "zweden", moeilijkheid: 1, vraag: "Wat zijn de kleuren van de Zweedse vlag?", antwoord: "Blauw met geel kruis" },
-  { id: 123, categorie: "zweden", moeilijkheid: 2, vraag: "Wat is de munteenheid van Zweden — Zweden gebruikt geen euro?", antwoord: "Zweedse kroon (Krona)" },
-  { id: 124, categorie: "zweden", moeilijkheid: 1, vraag: "Welk Zweeds DJ-icoon stond bekend om 'Wake Me Up' en 'Levels', en overleed in 2018?", antwoord: "Avicii (Tim Bergling)" },
-  { id: 125, categorie: "zweden", moeilijkheid: 2, vraag: "Welke Zweedse zangeres scoorde met 'Dancing on My Own' en is een LGBT-icoon?", antwoord: "Robyn" },
-  { id: 126, categorie: "zweden", moeilijkheid: 3, vraag: "Welke Zweedse producer — werkte voor Britney Spears, Backstreet Boys, Katy Perry — domineerde decennialang de Amerikaanse popmuziek?", antwoord: "Max Martin" },
-  { id: 127, categorie: "zweden", moeilijkheid: 2, vraag: "Welke Zweedse band scoorde in de jaren '90 met 'It Must Have Been Love' en 'The Look'?", antwoord: "Roxette" },
-  { id: 128, categorie: "zweden", moeilijkheid: 3, vraag: "Welke Zweedse metalband geldt als pionier van melodieuze death metal?", antwoord: "In Flames (of: Opeth)" },
-  { id: 129, categorie: "zweden", moeilijkheid: 3, vraag: "Welk Zweeds DJ-collectief scoorde met 'Don't You Worry Child'?", antwoord: "Swedish House Mafia" },
-  { id: 130, categorie: "zweden", moeilijkheid: 2, vraag: "Welke Zweedse zangeres won in 2012 het Eurovisiesongfestival met 'Euphoria'?", antwoord: "Loreen" },
-
-  { id: 131, categorie: "zweden", moeilijkheid: 1, vraag: "Welke gehaktballen van IKEA zijn een wereldwijd Zweeds exportproduct?", antwoord: "Köttbullar (Zweedse gehaktballen)" },
-  { id: 132, categorie: "zweden", moeilijkheid: 2, vraag: "Welke felrode bes met zoetzure smaak — onmisbaar bij Zweedse gehaktballen — heet 'lingon' in het Zweeds?", antwoord: "Vossenbes (lingonbes)" },
-  { id: 133, categorie: "zweden", moeilijkheid: 2, vraag: "Welke Zweedse broodjes, gerold met kaneel en kardemom, hebben een eigen feestdag in oktober?", antwoord: "Kanelbullar (kaneelbroodjes)" },
-  { id: 134, categorie: "zweden", moeilijkheid: 3, vraag: "Welke Zweedse vissoort wordt gefermenteerd in blik, ruikt extreem en draagt de naam 'surströmming'?", antwoord: "Gefermenteerde haring (surströmming)" },
-  { id: 135, categorie: "zweden", moeilijkheid: 3, vraag: "Welke Zweedse koffiepauze — bijna heilig in werkcultuur — bestaat uit koffie met iets zoets erbij?", antwoord: "Fika" },
-  { id: 136, categorie: "zweden", moeilijkheid: 2, vraag: "Welke Zweedse taart, groen en met marsepein bedekt, heet letterlijk 'prinsessen-taart'?", antwoord: "Prinsesstårta" },
-  { id: 137, categorie: "zweden", moeilijkheid: 3, vraag: "Welke Zweedse zalmbereiding wordt rauw, gemarineerd met zout, suiker en dille?", antwoord: "Gravad lax (gravlax)" },
-  { id: 138, categorie: "zweden", moeilijkheid: 1, vraag: "Welk wereldberoemd snoepje uit Zweden — kleine zachte rode visjes — wordt internationaal verkocht als 'Swedish Fish'?", antwoord: "Pastellfiskar (Swedish Fish)" },
-  { id: 139, categorie: "zweden", moeilijkheid: 3, vraag: "Welk Zweeds zomerfeest — met bloemenkransen en dans rond een meiboom — wordt eind juni gevierd?", antwoord: "Midzomer (Midsommar)" },
-  { id: 140, categorie: "zweden", moeilijkheid: 2, vraag: "Welke recente horrorfilm van Ari Aster speelt zich af tijdens dat Zweedse zomerfeest?", antwoord: "Midsommar" },
-  { id: 141, categorie: "zweden", moeilijkheid: 3, vraag: "Welk Zweeds telecombedrijf — vroeger pionier — is een van de grootste makers van mobiele telecom-infrastructuur?", antwoord: "Ericsson" },
-  { id: 142, categorie: "zweden", moeilijkheid: 3, vraag: "Welk Zweeds modemerk werd opgericht in Stockholm en heeft de afkorting H&M?", antwoord: "Hennes & Mauritz" },
-  { id: 143, categorie: "zweden", moeilijkheid: 3, vraag: "Welk Zweeds outdoor-merk — vossenkop in het logo — maakt de bekende Kånken-rugzak?", antwoord: "Fjällräven" },
-  { id: 144, categorie: "zweden", moeilijkheid: 2, vraag: "Welke Zweedse koning sneuvelde tijdens veldslagen en wordt bekend als de 'soldatenkoning' van de 18e eeuw?", antwoord: "Karel XII (Karl XII)" },
-  { id: 145, categorie: "zweden", moeilijkheid: 1, vraag: "Wie is sinds 1973 koning van Zweden?", antwoord: "Carl XVI Gustaf" },
-  { id: 146, categorie: "zweden", moeilijkheid: 2, vraag: "Welke Zweedse kroonprinses, dochter van Carl XVI Gustaf, zal de volgende koningin worden?", antwoord: "Kroonprinses Victoria" },
-  { id: 147, categorie: "zweden", moeilijkheid: 2, vraag: "Hoe heet de stad in het zuiden van Zweden, gekoppeld aan Kopenhagen via de Sontbrug?", antwoord: "Malmö" },
-  { id: 148, categorie: "zweden", moeilijkheid: 2, vraag: "Hoe noemt de bochtige wolkenkrabber in Malmö, ontworpen door Santiago Calatrava?", antwoord: "Turning Torso" },
-  { id: 149, categorie: "zweden", moeilijkheid: 3, vraag: "Welke Zweedse stad — universiteitsstad — ligt 70 km ten noorden van Stockholm?", antwoord: "Uppsala" },
-  { id: 150, categorie: "zweden", moeilijkheid: 2, vraag: "Welk Zweeds eiland in de Oostzee — toeristenparel in de zomer — staat bekend om de ringmuur rond Visby?", antwoord: "Gotland" },
-
-  { id: 151, categorie: "zweden", moeilijkheid: 2, vraag: "Welke Zweedse tennislegende won 11 grandslamtitels in de jaren '70 en '80 en stopte op 26-jarige leeftijd?", antwoord: "Björn Borg" },
-  { id: 152, categorie: "zweden", moeilijkheid: 3, vraag: "Welke Zweedse polsstokspringer brak meermaals het wereldrecord — bijnaam 'Mondo'?", antwoord: "Armand 'Mondo' Duplantis" },
-  { id: 153, categorie: "zweden", moeilijkheid: 2, vraag: "Welke Zweedse skiër — bijna onverslaanbaar in slalom in de jaren '70-'80 — heet Stenmark?", antwoord: "Ingemar Stenmark" },
-  { id: 154, categorie: "zweden", moeilijkheid: 3, vraag: "Welke Zweedse golfster won meerdere majors en was lange tijd 's werelds beste vrouw?", antwoord: "Annika Sörenstam" },
-  { id: 155, categorie: "zweden", moeilijkheid: 3, vraag: "Welke Zweedse voetbalclub uit Göteborg won in 1982 en 1987 de UEFA Cup?", antwoord: "IFK Göteborg" },
-  { id: 156, categorie: "zweden", moeilijkheid: 3, vraag: "Welke Zweedse premier werd in 1986 doodgeschoten in Stockholm — een zaak die nooit volledig is opgelost?", antwoord: "Olof Palme" },
-  { id: 157, categorie: "zweden", moeilijkheid: 2, vraag: "Welke Zweedse VN-secretaris-generaal (1953-1961) kwam om in een vliegtuigongeval boven Afrika?", antwoord: "Dag Hammarskjöld" },
-  { id: 158, categorie: "zweden", moeilijkheid: 3, vraag: "Welke Zweedse klimaatactiviste begon in 2018 voor het parlement te zitten met een bord 'Skolstrejk för klimatet'?", antwoord: "Greta Thunberg" },
-  { id: 159, categorie: "zweden", moeilijkheid: 3, vraag: "Welke Zweedse stad boven de poolcirkel — bekend om mijnbouw en noorderlicht — wordt fysiek verplaatst omdat de grond verzakt?", antwoord: "Kiruna" },
-  { id: 160, categorie: "zweden", moeilijkheid: 3, vraag: "Welk natuurgebied in Zweeds Lapland staat op de UNESCO-werelderfgoedlijst?", antwoord: "Laponia" },
-  { id: 161, categorie: "zweden", moeilijkheid: 3, vraag: "Welke Zweedse vampierfilm uit 2008 — verfilmd naar een boek van John Ajvide Lindqvist — heet 'Låt den rätte komma in'?", antwoord: "Let the Right One In (Låt den rätte komma in)" },
-  { id: 162, categorie: "zweden", moeilijkheid: 3, vraag: "Welke Zweedse serie op Netflix gaat over een prins op een kostschool — heet 'Young Royals'?", antwoord: "Young Royals" },
-  { id: 163, categorie: "zweden", moeilijkheid: 3, vraag: "Welke Zweedse band met gemaskerde figuren en occulte podiumshow won een Grammy met 'Cirice'?", antwoord: "Ghost" },
-  { id: 164, categorie: "zweden", moeilijkheid: 3, vraag: "Welk Zweeds defensiebedrijf maakt de Gripen-straaljager?", antwoord: "Saab" },
-  { id: 165, categorie: "zweden", moeilijkheid: 3, vraag: "In welke Zweedse stad — gekoppeld aan Ericsson — werd de Bluetooth-standaard ontwikkeld?", antwoord: "Lund" },
-  { id: 166, categorie: "zweden", moeilijkheid: 2, vraag: "Welk Zweeds biermerk — klassiek pils in de Scandinavische supermarkt — heet Pripps?", antwoord: "Pripps (Pripps Blå)" },
-  { id: 167, categorie: "zweden", moeilijkheid: 3, vraag: "Welke Zweedse uitvinder kreeg in 1959 het patent op de moderne driepuntsgordel — en gaf het gratis weg?", antwoord: "Nils Bohlin" },
-  { id: 168, categorie: "zweden", moeilijkheid: 3, vraag: "Welk Zweeds woord voor een uitgebreid buffet met kleine warme en koude gerechten werd internationaal gebruikelijk?", antwoord: "Smörgåsbord" },
-  { id: 169, categorie: "zweden", moeilijkheid: 3, vraag: "Welk autobedrijf, opgericht in 1927 in Göteborg, was lang het paradepaardje van de Zweedse industrie?", antwoord: "Volvo" },
-  { id: 170, categorie: "zweden", moeilijkheid: 3, vraag: "Welke Zweedse acteur speelde de vampier-vader Eric Northman in True Blood en is een van de zonen van Stellan Skarsgård?", antwoord: "Alexander Skarsgård" },
-
-  // ===== REISROUTE / KNIPOOG =====
-  { id: 171, categorie: "reisroute", moeilijkheid: 1, vraag: "In welk Deens stadje staat het originele Legoland?", antwoord: "Billund" },
-  { id: 172, categorie: "reisroute", moeilijkheid: 1, vraag: "In welk jaar werd Lego officieel opgericht?", antwoord: "1932" },
-  { id: 173, categorie: "reisroute", moeilijkheid: 2, vraag: "Wat betekent de naam 'Lego', samengetrokken uit twee Deense woorden?", antwoord: "'Leg godt' — speel goed" },
-  { id: 174, categorie: "reisroute", moeilijkheid: 2, vraag: "Welk materiaal werd voor de eerste Lego-blokjes gebruikt, vóór het ABS-plastic van vandaag?", antwoord: "Hout" },
-  { id: 175, categorie: "reisroute", moeilijkheid: 2, vraag: "Welke Scandinavische zeerovers met hun langschepen worden nagespeeld in het Vikingdorp dat jullie bezochten?", antwoord: "De Vikingen" },
-  { id: 176, categorie: "reisroute", moeilijkheid: 3, vraag: "Welk bekend reconstructie-Vikingdorp in Denemarken ligt aan een fjord en heet Bork?", antwoord: "Bork Vikingehavn" },
-  { id: 177, categorie: "reisroute", moeilijkheid: 2, vraag: "Welke god van donder en bliksem, met zijn hamer Mjölnir, was de populairste Viking-god?", antwoord: "Thor" },
-  { id: 178, categorie: "reisroute", moeilijkheid: 2, vraag: "Welke eenogige opperste Viking-god heeft twee raven, Hugin en Munin, als boodschappers?", antwoord: "Odin (Wodan)" },
-  { id: 179, categorie: "reisroute", moeilijkheid: 3, vraag: "Hoe heet de hamer van Thor?", antwoord: "Mjölnir" },
-  { id: 180, categorie: "reisroute", moeilijkheid: 3, vraag: "Hoe noemt de Viking-hal waar gesneuvelde krijgers eeuwig feest vieren?", antwoord: "Walhalla" },
-  { id: 181, categorie: "reisroute", moeilijkheid: 3, vraag: "Welke Viking-ontdekkingsreiziger bereikte Noord-Amerika rond het jaar 1000 — eeuwen voor Columbus?", antwoord: "Leif Eriksson" },
-  { id: 182, categorie: "reisroute", moeilijkheid: 3, vraag: "Hoe noemden de Vikingen het gebied dat zij ontdekten in Noord-Amerika?", antwoord: "Vinland" },
-  { id: 183, categorie: "reisroute", moeilijkheid: 2, vraag: "Hoe noemt het schrift dat de Vikingen gebruikten — hoekige tekens in stenen gekerfd?", antwoord: "Runen (runenschrift)" },
-  { id: 184, categorie: "reisroute", moeilijkheid: 2, vraag: "Welke tv-serie — vier seizoenen breed gevolgd, met Lagertha en Ragnar — speelt zich af in deze Vikingwereld?", antwoord: "Vikings" },
-  { id: 185, categorie: "reisroute", moeilijkheid: 3, vraag: "Welke historische Viking-leider, vader van Björn IJzerzij, gaf zijn naam aan de hoofdpersoon in de serie Vikings?", antwoord: "Ragnar Lodbrok" },
-  { id: 186, categorie: "reisroute", moeilijkheid: 2, vraag: "Welke beroemde brug-tunnel verbindt Kopenhagen met Malmö en is de letterlijke link tussen Denemarken en Zweden?", antwoord: "Øresundbrug (Öresundsbron)" },
-  { id: 187, categorie: "reisroute", moeilijkheid: 3, vraag: "Hoeveel kilometer lang is de Øresundverbinding ongeveer — brug plus tunnel?", antwoord: "Ongeveer 16 km" },
-  { id: 188, categorie: "reisroute", moeilijkheid: 2, vraag: "Welke Scandinavische thriller-serie speelt zich af op de Øresundbrug en heet simpelweg 'The Bridge'?", antwoord: "Bron / Broen (The Bridge)" },
-  { id: 189, categorie: "reisroute", moeilijkheid: 2, vraag: "Hoe noemt het smalle stuk zee tussen Denemarken en Zweden waarover de Øresundbrug loopt?", antwoord: "De Sont (Øresund)" },
-  { id: 190, categorie: "reisroute", moeilijkheid: 2, vraag: "Welk gemeenschappelijk symbool staat op de Deense, Zweedse, Noorse, Finse én IJslandse vlag?", antwoord: "Het Scandinavisch (Noords) kruis" },
-  { id: 191, categorie: "reisroute", moeilijkheid: 3, vraag: "Welke organisatie verenigt Denemarken, Zweden, Noorwegen, Finland en IJsland in samenwerking?", antwoord: "De Noordse Raad" },
-  { id: 192, categorie: "reisroute", moeilijkheid: 3, vraag: "Welk samenwerkingsverband zorgt voor paspoort- en arbeidsvrij verkeer tussen de Scandinavische landen?", antwoord: "De Noordse paspoort-unie / Noordse Raad" },
-  { id: 193, categorie: "reisroute", moeilijkheid: 1, vraag: "Welke drie klassieke Lego-noppensteen kleuren ken je vooral?", antwoord: "Rood, geel en blauw" },
-  { id: 194, categorie: "reisroute", moeilijkheid: 3, vraag: "Ongeveer hoeveel Legoland-parken zijn er wereldwijd anno 2026?", antwoord: "Ongeveer tien" },
-  { id: 195, categorie: "reisroute", moeilijkheid: 3, vraag: "Welke Deense universiteitsstad in Jutland wordt vaak doorkruist op weg van Duitsland richting Kopenhagen?", antwoord: "Aarhus" },
-  { id: 196, categorie: "reisroute", moeilijkheid: 3, vraag: "Welke Deense brug, de tweede grote verbinding van Denemarken, koppelt Funen aan Seeland?", antwoord: "De Grote Beltbrug (Storebæltsbroen)" },
-  { id: 197, categorie: "reisroute", moeilijkheid: 2, vraag: "Welk Deens eiland ligt tussen Jutland en Seeland, en huist Odense (geboorteplaats van Andersen)?", antwoord: "Funen (Fyn)" },
-  { id: 198, categorie: "reisroute", moeilijkheid: 2, vraag: "In welke stad — op het eiland Funen — werd Hans Christian Andersen geboren?", antwoord: "Odense" },
-  { id: 199, categorie: "reisroute", moeilijkheid: 2, vraag: "Welk Scandinavisch automerk zou een typisch keuze zijn voor een Vlaams reisprogramma dat door Denemarken en Zweden trekt?", antwoord: "Volvo (Zweeds)" },
-  { id: 200, categorie: "reisroute", moeilijkheid: 2, vraag: "Welke vier landen vormen samen met IJsland het Noords blok?", antwoord: "Denemarken, Zweden, Noorwegen en Finland" }
-];
-
-// ============================================
-// QUIZ FACTORY — werkt voor beide quizzes
-// ============================================
 const CATEGORIE_LABELS = {
-  // hoofdquiz
   vlaamse_cultuur: 'Vlaamse cultuur',
   aardrijkskunde: 'Aardrijkskunde',
   italie_specifiek: 'Italië',
@@ -2444,16 +2149,217 @@ const CATEGORIE_LABELS = {
   format_categorie: 'Hoort niet thuis',
   format_chronologie: 'Wat kwam eerst',
   format_schatten: 'Schatten',
-  // finale-quiz
-  denemarken: 'Denemarken',
-  zweden: 'Zweden',
-  reisroute: 'Reisroute / knipoog',
 };
 
-function escapeHtml(str) {
-  const div = document.createElement('div');
-  div.textContent = str;
-  return div.innerHTML;
+// ============================================
+// INIT
+// ============================================
+function init() {
+  // alle categorieën standaard aanvinken
+  const allCats = [...new Set(VRAGEN.map(v => v.categorie))];
+  allCats.forEach(c => state.selectedCategories.add(c));
+
+  buildCategoryChips(allCats);
+  applyFilters();
+
+  // event handlers
+  document.getElementById('stage').addEventListener('click', handleStageClick);
+  document.getElementById('filterBtn').addEventListener('click', openFilters);
+  document.getElementById('closeFilters').addEventListener('click', closeFilters);
+  document.getElementById('applyFilters').addEventListener('click', () => {
+    applyFilters();
+    closeFilters();
+  });
+  document.getElementById('shuffleBtn').addEventListener('click', shuffle);
+  document.getElementById('prevBtn').addEventListener('click', prevVraag);
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    // Reset = nieuwe ronde, terug naar willekeurige eerste vraag
+    shuffle();
+  });
+
+  // keyboard support (handig op desktop)
+  document.addEventListener('keydown', (e) => {
+    if (document.getElementById('filtersPanel').classList.contains('open')) return;
+    if (e.key === ' ' || e.key === 'Enter' || e.key === 'ArrowRight') {
+      e.preventDefault();
+      handleStageClick();
+    } else if (e.key === 'ArrowLeft') {
+      prevVraag();
+    }
+  });
+}
+
+function buildCategoryChips(cats) {
+  const container = document.getElementById('categoryChips');
+  container.innerHTML = '';
+  cats.forEach(cat => {
+    const count = VRAGEN.filter(v => v.categorie === cat).length;
+    const btn = document.createElement('button');
+    btn.className = 'pill active';
+    btn.dataset.cat = cat;
+    btn.textContent = `${CATEGORIE_LABELS[cat] || cat} · ${count}`;
+    btn.addEventListener('click', () => {
+      btn.classList.toggle('active');
+      if (btn.classList.contains('active')) state.selectedCategories.add(cat);
+      else state.selectedCategories.delete(cat);
+    });
+    container.appendChild(btn);
+  });
+
+  // moeilijkheid chips
+  document.querySelectorAll('#difficultyChips .pill').forEach(btn => {
+    btn.addEventListener('click', () => {
+      btn.classList.toggle('active');
+      const diff = parseInt(btn.dataset.diff);
+      if (btn.classList.contains('active')) state.selectedDifficulties.add(diff);
+      else state.selectedDifficulties.delete(diff);
+    });
+  });
+}
+
+// ============================================
+// FILTER & RENDER
+// ============================================
+function applyFilters() {
+  state.filteredVragen = VRAGEN.filter(v =>
+    state.selectedCategories.has(v.categorie) &&
+    state.selectedDifficulties.has(v.moeilijkheid)
+  );
+  // Reset alles en kies een random eerste vraag
+  state.history = [];
+  state.historyPos = -1;
+  state.seenIds.clear();
+  state.showAnswer = false;
+
+  if (state.filteredVragen.length > 0) {
+    const eersteIdx = pickRandomNext();
+    state.history.push(eersteIdx);
+    state.historyPos = 0;
+    state.seenIds.add(state.filteredVragen[eersteIdx].id);
+  }
+  render();
+}
+
+function render() {
+  const stage = document.getElementById('stage');
+
+  if (state.filteredVragen.length === 0) {
+    stage.innerHTML = '<div class="empty">Geen vragen met deze filters.<br>Pas de filters aan.</div>';
+    document.getElementById('cur').textContent = 0;
+    document.getElementById('tot').textContent = 0;
+    return;
+  }
+
+  const huidigeIdx = state.history[state.historyPos];
+  const vraag = state.filteredVragen[huidigeIdx];
+  document.getElementById('cur').textContent = state.seenIds.size;
+  document.getElementById('tot').textContent = state.filteredVragen.length;
+
+  const catLabel = CATEGORIE_LABELS[vraag.categorie] || vraag.categorie;
+  const diffLabel = ['', 'Makkelijk', 'Medium', 'Lastig'][vraag.moeilijkheid];
+
+  let html = `
+    <div class="meta fade-in">
+      <span class="tag">${catLabel}</span>
+      <span class="tag diff-${vraag.moeilijkheid}">${diffLabel}</span>
+    </div>
+    <div class="card fade-in">
+      <div style="width:100%">
+        <div class="question">${escapeHtml(vraag.vraag)}</div>
+  `;
+
+  if (state.showAnswer) {
+    html += `
+        <div class="answer-block fade-in">
+          <div class="answer-label">Antwoord</div>
+          <div class="answer">${escapeHtml(vraag.antwoord)}</div>
+        </div>
+    `;
+  }
+
+  html += `
+      </div>
+    </div>
+    <div class="hint">${state.showAnswer ? 'tik voor volgende vraag' : 'tik voor antwoord'}</div>
+  `;
+
+  stage.innerHTML = html;
+}
+
+function pickRandomNext() {
+  // Random kies een vraag-index die nog niet getoond is in deze ronde.
+  // Als alle vragen gezien zijn, reset de "seen" set (nieuwe ronde).
+  const total = state.filteredVragen.length;
+  if (total === 0) return -1;
+
+  // Verzamel beschikbare indices
+  let beschikbaar = [];
+  for (let i = 0; i < total; i++) {
+    if (!state.seenIds.has(state.filteredVragen[i].id)) {
+      beschikbaar.push(i);
+    }
+  }
+
+  // Als niets meer beschikbaar, nieuwe ronde starten
+  if (beschikbaar.length === 0) {
+    state.seenIds.clear();
+    for (let i = 0; i < total; i++) beschikbaar.push(i);
+    // Vermijd dat dezelfde vraag direct opnieuw komt
+    const laatstIdx = state.history.length > 0 ? state.history[state.history.length - 1] : -1;
+    if (laatstIdx !== -1 && beschikbaar.length > 1) {
+      beschikbaar = beschikbaar.filter(i => i !== laatstIdx);
+    }
+  }
+
+  const idx = beschikbaar[Math.floor(Math.random() * beschikbaar.length)];
+  return idx;
+}
+
+function handleStageClick() {
+  if (state.filteredVragen.length === 0) return;
+  if (!state.showAnswer) {
+    state.showAnswer = true;
+    render();
+    return;
+  }
+  // Antwoord was zichtbaar → ga naar volgende
+  // Als we ergens midden in de history zitten (na 'vorige'), ga eerst forward door history
+  if (state.historyPos < state.history.length - 1) {
+    state.historyPos++;
+  } else {
+    // Kies een nieuwe random vraag
+    const nextIdx = pickRandomNext();
+    if (nextIdx === -1) return;
+    state.history.push(nextIdx);
+    state.historyPos = state.history.length - 1;
+    state.seenIds.add(state.filteredVragen[nextIdx].id);
+  }
+  state.showAnswer = false;
+  render();
+}
+
+function prevVraag() {
+  if (state.filteredVragen.length === 0) return;
+  if (state.historyPos > 0) {
+    state.historyPos--;
+    state.showAnswer = false;
+    render();
+  }
+}
+
+function shuffle() {
+  // Reset volledig: nieuwe ronde, nieuwe random start
+  state.history = [];
+  state.historyPos = -1;
+  state.seenIds.clear();
+  const eersteIdx = pickRandomNext();
+  if (eersteIdx !== -1) {
+    state.history.push(eersteIdx);
+    state.historyPos = 0;
+    state.seenIds.add(state.filteredVragen[eersteIdx].id);
+  }
+  state.showAnswer = false;
+  render();
 }
 
 function shuffleArray(arr) {
@@ -2463,235 +2369,23 @@ function shuffleArray(arr) {
   }
 }
 
-function createQuiz(rootEl, vragen) {
-  // scoped element queries
-  const q = (sel) => rootEl.querySelector(sel);
-  const qa = (sel) => rootEl.querySelectorAll(sel);
+function openFilters() {
+  document.getElementById('filtersPanel').classList.add('open');
+}
+function closeFilters() {
+  document.getElementById('filtersPanel').classList.remove('open');
+}
 
-  const stageEl = q('[data-role="stage"]');
-  const curEl = q('[data-role="cur"]');
-  const totEl = q('[data-role="tot"]');
-  const filterBtn = q('[data-role="filterBtn"]');
-  const shuffleBtn = q('[data-role="shuffleBtn"]');
-  const prevBtn = q('[data-role="prevBtn"]');
-  const resetBtn = q('[data-role="resetBtn"]');
-  const filtersPanel = q('[data-role="filtersPanel"]');
-  const closeFiltersBtn = q('[data-role="closeFilters"]');
-  const applyFiltersBtn = q('[data-role="applyFilters"]');
-  const categoryChipsContainer = q('[data-role="categoryChips"]');
-
-  const state = {
-    filteredVragen: [],
-    history: [],
-    historyPos: -1,
-    seenIds: new Set(),
-    showAnswer: false,
-    selectedCategories: new Set(),
-    selectedDifficulties: new Set([1, 2, 3]),
-  };
-
-  function buildCategoryChips(cats) {
-    categoryChipsContainer.innerHTML = '';
-    cats.forEach(cat => {
-      const count = vragen.filter(v => v.categorie === cat).length;
-      const btn = document.createElement('button');
-      btn.className = 'pill active';
-      btn.dataset.cat = cat;
-      btn.textContent = `${CATEGORIE_LABELS[cat] || cat} · ${count}`;
-      btn.addEventListener('click', () => {
-        btn.classList.toggle('active');
-        if (btn.classList.contains('active')) state.selectedCategories.add(cat);
-        else state.selectedCategories.delete(cat);
-      });
-      categoryChipsContainer.appendChild(btn);
-    });
-
-    qa('[data-role="difficultyChips"] .pill').forEach(btn => {
-      btn.addEventListener('click', () => {
-        btn.classList.toggle('active');
-        const diff = parseInt(btn.dataset.diff);
-        if (btn.classList.contains('active')) state.selectedDifficulties.add(diff);
-        else state.selectedDifficulties.delete(diff);
-      });
-    });
-  }
-
-  function applyFilters() {
-    state.filteredVragen = vragen.filter(v =>
-      state.selectedCategories.has(v.categorie) &&
-      state.selectedDifficulties.has(v.moeilijkheid)
-    );
-    state.history = [];
-    state.historyPos = -1;
-    state.seenIds.clear();
-    state.showAnswer = false;
-
-    if (state.filteredVragen.length > 0) {
-      const eersteIdx = pickRandomNext();
-      state.history.push(eersteIdx);
-      state.historyPos = 0;
-      state.seenIds.add(state.filteredVragen[eersteIdx].id);
-    }
-    render();
-  }
-
-  function render() {
-    if (state.filteredVragen.length === 0) {
-      stageEl.innerHTML = '<div class="empty">Geen vragen met deze filters.<br>Pas de filters aan.</div>';
-      curEl.textContent = 0;
-      totEl.textContent = 0;
-      return;
-    }
-
-    const huidigeIdx = state.history[state.historyPos];
-    const vraag = state.filteredVragen[huidigeIdx];
-    curEl.textContent = state.seenIds.size;
-    totEl.textContent = state.filteredVragen.length;
-
-    const catLabel = CATEGORIE_LABELS[vraag.categorie] || vraag.categorie;
-    const diffLabel = ['', 'Makkelijk', 'Medium', 'Lastig'][vraag.moeilijkheid];
-
-    let html = `
-      <div class="meta fade-in">
-        <span class="tag">${catLabel}</span>
-        <span class="tag diff-${vraag.moeilijkheid}">${diffLabel}</span>
-      </div>
-      <div class="card fade-in">
-        <div style="width:100%">
-          <div class="question">${escapeHtml(vraag.vraag)}</div>
-    `;
-
-    if (state.showAnswer) {
-      html += `
-          <div class="answer-block fade-in">
-            <div class="answer-label">Antwoord</div>
-            <div class="answer">${escapeHtml(vraag.antwoord)}</div>
-          </div>
-      `;
-    }
-
-    html += `
-        </div>
-      </div>
-      <div class="hint">${state.showAnswer ? 'tik voor volgende vraag' : 'tik voor antwoord'}</div>
-    `;
-
-    stageEl.innerHTML = html;
-  }
-
-  function pickRandomNext() {
-    const total = state.filteredVragen.length;
-    if (total === 0) return -1;
-
-    let beschikbaar = [];
-    for (let i = 0; i < total; i++) {
-      if (!state.seenIds.has(state.filteredVragen[i].id)) {
-        beschikbaar.push(i);
-      }
-    }
-
-    if (beschikbaar.length === 0) {
-      state.seenIds.clear();
-      for (let i = 0; i < total; i++) beschikbaar.push(i);
-      const laatstIdx = state.history.length > 0 ? state.history[state.history.length - 1] : -1;
-      if (laatstIdx !== -1 && beschikbaar.length > 1) {
-        beschikbaar = beschikbaar.filter(i => i !== laatstIdx);
-      }
-    }
-
-    const idx = beschikbaar[Math.floor(Math.random() * beschikbaar.length)];
-    return idx;
-  }
-
-  function handleStageClick() {
-    if (state.filteredVragen.length === 0) return;
-    if (!state.showAnswer) {
-      state.showAnswer = true;
-      render();
-      return;
-    }
-    if (state.historyPos < state.history.length - 1) {
-      state.historyPos++;
-    } else {
-      const nextIdx = pickRandomNext();
-      if (nextIdx === -1) return;
-      state.history.push(nextIdx);
-      state.historyPos = state.history.length - 1;
-      state.seenIds.add(state.filteredVragen[nextIdx].id);
-    }
-    state.showAnswer = false;
-    render();
-  }
-
-  function prevVraag() {
-    if (state.filteredVragen.length === 0) return;
-    if (state.historyPos > 0) {
-      state.historyPos--;
-      state.showAnswer = false;
-      render();
-    }
-  }
-
-  function shuffle() {
-    state.history = [];
-    state.historyPos = -1;
-    state.seenIds.clear();
-    const eersteIdx = pickRandomNext();
-    if (eersteIdx !== -1) {
-      state.history.push(eersteIdx);
-      state.historyPos = 0;
-      state.seenIds.add(state.filteredVragen[eersteIdx].id);
-    }
-    state.showAnswer = false;
-    render();
-  }
-
-  function openFilters() { filtersPanel.classList.add('open'); }
-  function closeFilters() { filtersPanel.classList.remove('open'); }
-
-  // init
-  const allCats = [...new Set(vragen.map(v => v.categorie))];
-  allCats.forEach(c => state.selectedCategories.add(c));
-  buildCategoryChips(allCats);
-  applyFilters();
-
-  // events
-  stageEl.addEventListener('click', handleStageClick);
-  filterBtn.addEventListener('click', openFilters);
-  closeFiltersBtn.addEventListener('click', closeFilters);
-  applyFiltersBtn.addEventListener('click', () => { applyFilters(); closeFilters(); });
-  shuffleBtn.addEventListener('click', shuffle);
-  prevBtn.addEventListener('click', prevVraag);
-  resetBtn.addEventListener('click', shuffle);
-
-  // keyboard: enkel als deze quiz's filterpanel niet open is — werkt voor beide,
-  // klik-acties zijn dominant zodat het op telefoon altijd OK is.
-  // We binden NIET globaal hier om dubbele triggers tussen quizzes te vermijden.
-
-  return { state, render, shuffle, applyFilters };
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
 }
 
 // ============================================
-// GO — start beide quizzes
+// GO
 // ============================================
-const mainQuiz = createQuiz(document.querySelector('[data-quiz="main"]'), VRAGEN);
-const finaleQuiz = createQuiz(document.querySelector('[data-quiz="finale"]'), VRAGEN_FINALE);
-
-// keyboard support enkel voor hoofdquiz (zoals voorheen), om dubbele triggers te vermijden
-document.addEventListener('keydown', (e) => {
-  // niet als een van de filterpanels open is
-  const anyFilterOpen = document.querySelector('.filters.open');
-  if (anyFilterOpen) return;
-  // niet als focus op input/button staat
-  if (e.target.tagName === 'BUTTON' || e.target.tagName === 'INPUT') return;
-  if (e.key === ' ' || e.key === 'Enter' || e.key === 'ArrowRight') {
-    e.preventDefault();
-    const mainStage = document.querySelector('[data-quiz="main"] [data-role="stage"]');
-    mainStage.click();
-  } else if (e.key === 'ArrowLeft') {
-    document.querySelector('[data-quiz="main"] [data-role="prevBtn"]').click();
-  }
-});
+init();
 </script>
 </body>
 </html>
